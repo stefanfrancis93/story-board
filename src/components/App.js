@@ -1,15 +1,13 @@
 import React, { useRef } from "react";
 import Board from "./Board";
-import { createDndContext, DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import DragAndDrop from "./DragAndDrop";
 
 const App = () => {
-  const manager = useRef(createDndContext(HTML5Backend));
   return (
     <main style={{ height: "100%" }}>
-      <DndProvider manager={manager.current.dragDropManager}>
+      <DragAndDrop>
         <Board />
-      </DndProvider>
+      </DragAndDrop>
     </main>
   );
 };
