@@ -1,0 +1,46 @@
+{
+  "columns": [
+    {
+      "id": 0,
+      "listTitle": "Stuff to try (this is a list)",
+      "cards": [
+        {
+          "id": 0,
+          "createdAt": 1578631247197,
+          "title": "This is a card. Drag it onto \"Tried It\" to show it's done.",
+          "description": ""
+        },
+        {
+          "id": 1,
+          "createdAt": 1578631247197,
+          "title": "Cards do many cool things. Click on this card to open it and learn more...",
+          "description": "- Click Edit if you'd like to add or edit a card's description. You can also change the card's title (just click it!).\\n- Use the buttons on the right to add pictures, labels, checklists and more.\\n- The attached picture is Taco, the most famous Siberian Husky in New York City, and official spokes-mascot for Trello. You might see him around Trello introducing new features and whatnot."
+        },
+        {
+          "id": 2,
+          "createdAt": 1578631247197,
+          "title": "Add all the cards and lists you need.",
+          "description": "Add a more detailed description…"
+        },
+        {
+          "id": 3,
+          "createdAt": 1578631247197,
+          "title": "There's lots more magic...",
+          "description": "Learn how to use Trello to live with perspective: https://trello.com/guide\\nThere’s so many amazing ways to use Trello. [Get inspired!](https://trello.com/inspiration)"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "listTitle": "Tried it (another list)",
+      "cards": [
+        {
+          "id": 0,
+          "createdAt": 1578631247197,
+          "title": "Test",
+          "description": "Test description"
+        }
+      ]
+    }
+  ]
+}
