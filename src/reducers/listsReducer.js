@@ -67,6 +67,14 @@ export default (state = defaultState, action) => {
       ];
       newState = { columns };
       break;
+    case constants.SWAP_LIST:
+      const { srcList, targetList } = action;
+      [columns[srcList.columnIndex], columns[targetList.columnIndex]] = [
+        columns[srcList.columnIndex],
+        columns[targetList.columnIndex]
+      ];
+      newState = { columns };
+      break;
     default:
       newState = state;
       break;

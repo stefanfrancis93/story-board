@@ -53,3 +53,11 @@ export function removeCard(cardIndex, columnIndex) {
     columnIndex
   };
 }
+
+export function swapList(src, target) {
+  return {
+    type: constants.SWAP_LIST,
+    src,
+    target
+  };
+}

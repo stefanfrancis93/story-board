@@ -1,9 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
+import { DropTarget } from "react-dnd";
 import { bindActionCreators } from "redux";
 import List from "./List";
 import AddList from "./AddItem";
-import { fetchLists } from "../actions";
+import { fetchLists, swapList } from "../actions";
+import constants from "../constants";
+
+const cardDropTarget = {
+  drop(props, monitor) {
+    const item = monitor.getItem();
+    const data = {
+      src: {
+        columnIndex: item.parentIndex
+      },
+      target: {
+        columnIndex: props.parentIndex
+      }
+    };
+    console.log(data);
+    props.dispatch(swapList(data.src, data.target));
+  },
+  canDrop() {
+    return true;
+  }
+};
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
 
 class Board extends React.Component {
   componentDidMount() {
@@ -25,7 +52,7 @@ class Board extends React.Component {
   };
 
   render() {
-    return (
+    return this.props.connectDropTarget(
       <div
         className="board"
         style={{
@@ -65,4 +92,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default DropTarget(
+  constants.LIST,
+  cardDropTarget,
+  collect
+)(connect(mapStateToProps, mapDispatchToProps)(Board));

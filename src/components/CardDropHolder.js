@@ -18,6 +18,8 @@ const cardDropTarget = {
         cardIndex: props.index
       }
     };
+    if (!item.parentIndex || !item.index || !props.parentIndex || !props.index)
+      return;
     props.dispatch(swapCard(data.src, data.target));
   },
   canDrop() {

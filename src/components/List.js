@@ -1,9 +1,21 @@
 import React from "react";
-import { DropTarget } from "react-dnd";
+import { DropTarget, DragSource } from "react-dnd";
 import constants from "../constants";
 import CardDropHolder from "./CardDropHolder";
 import AddItem from "./AddItem";
 import { shiftCard, removeCard } from "../actions";
+
+const CardSource = {
+  beginDrag(props) {
+    return props;
+  }
+};
+function collectList(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  };
+}
 
 const columnTarget = {
   drop(props, monitor) {
@@ -52,30 +64,32 @@ class List extends React.Component {
   };
 
   render() {
-    return this.props.connectDropTarget(
-      <div
-        className="list-wrapper"
-        style={{
-          ...styles.listWrapper,
-          opacity: this.props.isDragging ? 0.25 : 1
-        }}
-      >
-        <div className="list" style={styles.list}>
-          <div className="list-header" style={styles.header}>
-            <h2 className="list-header-name" style={styles.headerName}>
-              {this.props.list.listTitle}
-            </h2>
+    return this.props.connectDragSource(
+      this.props.connectDropTarget(
+        <div
+          className="list-wrapper"
+          style={{
+            ...styles.listWrapper,
+            opacity: this.props.isDragging ? 0.25 : 1
+          }}
+        >
+          <div className="list" style={styles.list}>
+            <div className="list-header" style={styles.header}>
+              <h2 className="list-header-name" style={styles.headerName}>
+                {this.props.list.listTitle}
+              </h2>
+            </div>
+            <div className="list-cards" style={styles.listCards}>
+              {this.renderCards()}
+            </div>
+            <AddItem
+              item="card"
+              index={this.props.index}
+              dispatch={this.props.dispatch}
+            />
           </div>
-          <div className="list-cards" style={styles.listCards}>
-            {this.renderCards()}
-          </div>
-          <AddItem
-            item="card"
-            index={this.props.index}
-            dispatch={this.props.dispatch}
-          />
         </div>
-      </div>
+      )
     );
   }
 }
@@ -122,4 +136,8 @@ const styles = {
   }
 };
 
-export default DropTarget(constants.CARD, columnTarget, collect)(List);
+export default DragSource(
+  constants.CARD,
+  CardSource,
+  collectList
+)(DropTarget(constants.CARD, columnTarget, collect)(List));
