@@ -32,6 +32,17 @@ class Board extends React.Component {
           padding: "10px 5px"
         }}
       >
+        <h1
+          className="main-title"
+          style={{
+            fontSize: 30,
+            color: "#fff",
+            fontFamily: "fantasy",
+            textAlign: "center"
+          }}
+        >
+          Story Board
+        </h1>
         {this.renderLists()}
         <AddList
           item="list"
