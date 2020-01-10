@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
+import { DndProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 import Board from "./Board";
-import DragAndDrop from "./DragAndDrop";
 
-const App = () => {
-  return (
-    <main style={{ height: "100%" }}>
-      <DragAndDrop>
-        <Board />
-      </DragAndDrop>
-    </main>
-  );
-};
+class App extends React.Component {
+  render() {
+    return (
+      <main style={{ height: "100%" }}>
+        <DndProvider backend={HTML5Backend}>
+          <Board />
+        </DndProvider>
+      </main>
+    );
+  }
+}
 
 export default App;

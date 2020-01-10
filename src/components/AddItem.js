@@ -1,81 +1,110 @@
 import React, { useState } from "react";
+import { addCard, addColumn } from "../actions";
 
-const AddItem = ({ item }) => {
-  const [idle, setIdle] = useState(true);
-  let handleAddItem = () => {
-      setIdle(false);
-    },
-    handleCloseButton = () => {
-      setIdle(true);
-    };
+class AddItem extends React.Component {
+  state = {
+    idle: true,
+    title: ""
+  };
+  handleAddItem = () => {
+    this.setState({ idle: false });
+  };
+  handleCloseButton = () => {
+    this.setState({ idle: true });
+  };
+  add = event => {
+    event.preventDefault();
+    if (!this.state.title || !this.state.title.length) {
+      return false;
+    }
+    console.log(this.state.title);
+    if (this.props.item === "card") {
+      this.props.dispatch(addCard(this.state.title, this.props.index));
+    } else {
+      this.props.dispatch(addColumn(this.state.title));
+    }
+    this.setState({ title: "" });
+    this.handleCloseButton();
+  };
+  handleTitleChange = event => {
+    this.setState({ title: event.target.value });
+  };
 
-  return (
-    <div
-      className="add-item item-wrapper"
-      style={{
-        ...styles.itemWrapper,
-        ...styles.addItem,
-        backgroundColor: idle ? "hsla(0,0%,100%,.24)" : "#ebecf0",
-        cursor: idle ? "default" : "pointer",
-        margin: item === "card" ? 0 : "0 4px"
-      }}
-    >
-      <form>
-        <a
-          className="open-add-item js-open-add-item"
-          href="#"
-          style={{ textDecoration: "none" }}
-          onClick={handleAddItem}
-        >
-          <span
-            className="placeholder"
-            style={{
-              ...styles.placeholder,
-              display: idle ? "block" : "none",
-              color: item === "card" ? "#5e6c84" : "#fff"
-            }}
-            onClick={handleAddItem}
-          >
-            <span className="icon-sm icon-add"></span>
-            Add another {item}
-          </span>
-        </a>
-        <input
-          className="item-name-input"
-          type="text"
-          name="name"
-          placeholder={`Enter ${item} title...`}
-          autoComplete="off"
-          dir="auto"
-          maxLength="512"
-          style={{ ...styles.itemNameInput, display: !idle ? "block" : "none" }}
-        />
-        <div
-          className="item-add-controls"
-          style={{
-            ...styles.itemAddControls,
-            display: !idle ? "block" : "none"
-          }}
-        >
-          <input
-            className="item-add-button"
-            type="submit"
-            value={`Add ${item}`}
-            style={styles.itemAddButton}
-          />
+  render() {
+    return (
+      <div
+        className="add-item item-wrapper"
+        style={{
+          ...styles.itemWrapper,
+          ...styles.addItem,
+          backgroundColor: this.state.idle ? "hsla(0,0%,100%,.24)" : "#ebecf0",
+          cursor: this.state.idle ? "default" : "pointer",
+          margin: this.props.item === "card" ? 0 : "0 4px"
+        }}
+      >
+        <form>
           <a
-            className="icon-lg icon-close dark-hover js-cancel-edit"
+            className="open-add-item js-open-add-item"
             href="#"
-            style={styles.closeButton}
-            onClick={handleCloseButton}
+            style={{ textDecoration: "none" }}
+            onClick={this.handleAddItem}
           >
-            Close
+            <span
+              className="placeholder"
+              style={{
+                ...styles.placeholder,
+                display: this.state.idle ? "block" : "none",
+                color: this.props.item === "card" ? "#5e6c84" : "#fff"
+              }}
+              onClick={this.handleAddItem}
+            >
+              <span className="icon-sm icon-add"></span>
+              Add another {this.props.item}
+            </span>
           </a>
-        </div>
-      </form>
-    </div>
-  );
-};
+          <input
+            className="item-name-input"
+            type="text"
+            name="name"
+            placeholder={`Enter ${this.props.item} title...`}
+            autoComplete="off"
+            dir="auto"
+            maxLength="512"
+            style={{
+              ...styles.itemNameInput,
+              display: !this.state.idle ? "block" : "none"
+            }}
+            value={this.state.title}
+            onChange={this.handleTitleChange}
+          />
+          <div
+            className="item-add-controls"
+            style={{
+              ...styles.itemAddControls,
+              display: !this.state.idle ? "block" : "none"
+            }}
+          >
+            <input
+              className="item-add-button"
+              type="submit"
+              value={`Add ${this.props.item}`}
+              style={styles.itemAddButton}
+              onClick={this.add}
+            />
+            <a
+              className="icon-lg icon-close dark-hover js-cancel-edit"
+              href="#"
+              style={styles.closeButton}
+              onClick={this.handleCloseButton}
+            >
+              Close
+            </a>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
 
 const styles = {
   addItem: {

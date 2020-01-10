@@ -1,19 +1,29 @@
 import React from "react";
-import { useDrag } from "react-dnd";
+import { DragSource } from "react-dnd";
+import constants from "../constants";
 
-const Card = ({ card }) => {
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: "card" },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
-  });
-  return (
-    <div
-      className="list-card"
-      style={{ ...styles.listCard, opacity: isDragging ? 0.5 : 1 }}
-      ref={drag}
-    >
+const CardSource = {
+  beginDrag(props) {
+    return props;
+  }
+};
+function collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  };
+}
+const Card = ({
+  card,
+  handleRemoveCard,
+  index,
+  createdAt,
+  description,
+  connectDragSource,
+  isDragging
+}) => {
+  return connectDragSource(
+    <div className="list-card" style={styles.listCard}>
       <div className="list-card-details" style={styles.listCardDetails}>
         <span className="list-card-title">{card.title}</span>
         <span className="list-card-description" style={{ display: "none" }}>
@@ -46,4 +56,4 @@ const styles = {
   }
 };
 
-export default Card;
+export default DragSource(constants.CARD, CardSource, collect)(Card);
