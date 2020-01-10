@@ -56,6 +56,7 @@ class List extends React.Component {
         handleRemoveCard={this.handleRemoveCard}
         index={index}
         parentIndex={this.props.index}
+        handleCardClick={this.props.handleCardClick}
       />
     ));
 

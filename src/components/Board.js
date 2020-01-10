@@ -44,6 +44,7 @@ class Board extends React.Component {
         key={index}
         index={index}
         dispatch={this.props.dispatch}
+        handleCardClick={this.props.handleCardClick}
       />
     ));
 

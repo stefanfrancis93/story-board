@@ -39,7 +39,8 @@ const CardDropHolder = ({
   card,
   handleRemoveCard,
   index,
-  parentIndex
+  parentIndex,
+  handleCardClick
 }) =>
   connectDropTarget(
     <div style={{ opacity: isOver ? 0.5 : 1 }}>
@@ -50,6 +51,7 @@ const CardDropHolder = ({
         card={card}
         parentIndex={parentIndex}
         handleRemoveCard={handleRemoveCard}
+        handleCardClick={handleCardClick}
       />
     </div>
   );

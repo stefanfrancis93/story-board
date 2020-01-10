@@ -20,10 +20,15 @@ const Card = ({
   createdAt,
   description,
   connectDragSource,
-  isDragging
+  isDragging,
+  handleCardClick
 }) => {
   return connectDragSource(
-    <div className="list-card" style={styles.listCard}>
+    <div
+      className="list-card"
+      style={styles.listCard}
+      onClick={() => handleCardClick(card)}
+    >
       <div className="list-card-details" style={styles.listCardDetails}>
         <span className="list-card-title">{card.title}</span>
         <span className="list-card-description" style={{ display: "none" }}>
